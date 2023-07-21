@@ -36,6 +36,20 @@ async function subscribe(){
     console.log(JSON.stringify(push))
     const keyBrowser = JSON.stringify(push)
 }
+if(keyBrowser){
+    $.ajax({
+        url: 'push.js', 
+        type: 'GET',
+        data: { 'keyBrowser': keyBrowser },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
 
 
 
