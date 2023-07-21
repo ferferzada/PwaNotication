@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<form id="myForm">
+    <input type="text" id="text1" name="text1" placeholder="Notification Body"><br>
+    <input type="text" id="text2" name="text2" placeholder="Notification URL"><br>
+    <input type="file" id="image" name="image" accept="image/*"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<button onclick="subscribe()"> GG </button>
+
+<script>
+addEventListener('load', async ()=>{
+    let sw =navigator.serviceWorker.register('./sw.js');
+    console.log(sw);
+})
+
+async function subscribe(){
+    let sw = await navigator.serviceWorker.ready;
+    let push = await sw.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey : 'BF-CXKmlD3HsaQSp2RX3U4TusiOEDbsDKwvPtXc6CHEh5-qegFJZxxs4JyeBVYktqNYjBLw0xbBmoo--9OrUSLg'
+
+    })
+    console.log(JSON.stringify(push))
+    const keyBrowser = JSON.stringify(push)
+}
+
+
+
+document.querySelector('#myForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if(Notification.permission === 'granted') {
+        const notification = new Notification('Notificando o Usuário',{
+            body: document.querySelector("#text1").value,
+            // For image or icon use icon: document.querySelector("#image").value,
+        });
+        notification.addEventListener("click",()=>{
+            window.open(document.querySelector("#text2").value);
+        });
+    } else {
+        // Optional: Notify the user that they need to grant notification permission
+        alert('Please enable notifications to receive updates.');
+    }
+});
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
