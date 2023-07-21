@@ -17,13 +17,12 @@
     <input type="file" id="image" name="image" accept="image/*"><br>
     <input type="submit" value="Submit">
 </form>
-
+<button class="new-teste">fnk</button>
 <button onclick="subscribe()"> GG </button>
 
 <script>
 addEventListener('load', async ()=>{
     let sw =navigator.serviceWorker.register('./sw.js');
-    console.log(sw);
 })
 
 async function subscribe(){
@@ -31,23 +30,13 @@ async function subscribe(){
     let push = await sw.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey : 'BF-CXKmlD3HsaQSp2RX3U4TusiOEDbsDKwvPtXc6CHEh5-qegFJZxxs4JyeBVYktqNYjBLw0xbBmoo--9OrUSLg'
-
     })
-    console.log(JSON.stringify(push))
-    const keyBrowser = JSON.stringify(push)
-}
-if(keyBrowser){
-    $.ajax({
-        url: 'push.js', 
-        type: 'GET',
-        data: { 'keyBrowser': keyBrowser },
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
+
+    // Converte o objeto push em uma string JSON
+    const jsonString = JSON.stringify(push);
+
+    // Armazena a string JSON no Local Storage
+    localStorage.setItem('push', jsonString);
 }
 
 

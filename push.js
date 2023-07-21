@@ -10,15 +10,17 @@ let keyPush = {
 push.setVapidDetails("https://ferferzada.github.io/PwaNotication/",keyPush.publicKey,keyPush.privateKey);
 
 app.get('/push', function(req, res){
-    let keyBrowser = req.query.keyBrowser;  // get keyBrowser from the query parameters
+    let keyBrowser = req.query.keyBrowser; 
+    let pushe = localStorage.getItem('push')
     let sub = {
         "endpoint":keyBrowser,
         "expirationTime":null,
-        "keys":{"p256dh":"BAJ9XNPHp3W9eXtfVWCTHF59OQr3mdUYdwKPKRP_ExneizlIsiCi666fGhVkcdf2dpKOTUcyqjRkf9qjEQVTRF4","auth":"BCCtiWd553LyzGYZVpHS1g"}
-    };
-    push.sendNotification(sub, 'teste mensage');
-    res.send('Notification sent.');
-});
+        "keys":pushe,
+        "auth":"BCCtiWd553LyzGYZVpHS1g"}
+    },
+    push.sendNotification(sub, 'teste mensage'),
+    res.send('Notification sent.')
+)
 
 app.listen(3000, function(){
     console.log('App listening on port 3000.');
